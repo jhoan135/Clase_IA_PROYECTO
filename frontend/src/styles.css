@@ -270,6 +270,10 @@ input, select, textarea {
   animation: slideIn 0.4s ease;
 }
 
+.result-card {
+  scroll-margin-top: 6rem;
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;

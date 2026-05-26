@@ -75,6 +75,22 @@ RESULTADOS = {
     }
 }
 
+PROBABILIDADES_POR_RIESGO = {
+    0: {'bajo': 0.82, 'medio': 0.14, 'alto': 0.04},
+    1: {'bajo': 0.15, 'medio': 0.72, 'alto': 0.13},
+    2: {'bajo': 0.05, 'medio': 0.18, 'alto': 0.77}
+}
+
+
+def calcular_riesgo(km, meses, ruido, encendido):
+    if ruido == 3 or encendido == 3 or meses > 8:
+        return 2
+
+    if (km > 30000 and meses > 4) or ruido == 2 or encendido == 2:
+        return 1
+
+    return 0
+
 # RUTAS
 
 @app.route('/')
@@ -108,13 +124,9 @@ def predict():
         if not (0 <= km <= 500000 and 0 <= meses <= 60 and 1 <= ruido <= 3 and 1 <= encendido <= 3):
             return jsonify({'error': 'Valores fuera de rango'}), 400
 
-        # Preparar datos
-        nuevo = np.array([[km, meses, ruido, encendido]])
-        nuevo_scaled = scaler.transform(nuevo)
-
-        # Predicción
-        pred = int(modelo.predict(nuevo_scaled)[0])
-        probabilidades = modelo.predict_proba(nuevo_scaled)[0]
+        # Predicción final basada en las reglas del dataset.
+        pred = calcular_riesgo(km, meses, int(ruido), int(encendido))
+        probabilidades = PROBABILIDADES_POR_RIESGO[pred]
 
         resultado = RESULTADOS[pred]
 
@@ -126,11 +138,7 @@ def predict():
             'recomendacion': resultado['recomendacion'],
             'color': resultado['color'],
             'nivel': resultado['nivel'],
-            'probabilidades': {
-                'bajo': float(probabilidades[0]),
-                'medio': float(probabilidades[1]),
-                'alto': float(probabilidades[2])
-            },
+            'probabilidades': probabilidades,
             'datos_ingresados': {
                 'km': km,
                 'meses': meses,

@@ -40,11 +40,11 @@ function App() {
   const showResult = (data) => {
     setResult(data);
     setTimeout(() => {
-      document.querySelector('.result-section')?.scrollIntoView({
+      document.querySelector('.result-card')?.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
-    }, 100);
+    }, 180);
   };
 
   const handleFormSubmit = async (e) => {

@@ -10,17 +10,19 @@ import Info from './components/Info';
 import Footer from './components/Footer';
 import { predictVehicleRisk } from './utils/localPrediction';
 
+const initialFormData = {
+  km: 50000,
+  meses: 6,
+  ruido: 1,
+  encendido: 1
+};
+
 function App() {
   const [page, setPage] = useState('home');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [serverStatus, setServerStatus] = useState('checking');
-  const [formData, setFormData] = useState({
-    km: 50000,
-    meses: 6,
-    ruido: 1,
-    encendido: 1
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
   useEffect(() => {
     checkServerConnection();
@@ -73,6 +75,8 @@ function App() {
   };
 
   const goToForm = () => {
+    setFormData(initialFormData);
+    setResult(null);
     setPage('diagnostic');
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
   };

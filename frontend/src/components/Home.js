@@ -1,6 +1,35 @@
 import React from 'react';
 
 function Home({ onStart }) {
+  const contextOptions = [
+    {
+      label: 'Qué analiza',
+      title: 'Datos principales',
+      text: 'Kilometraje, meses sin mantenimiento, ruido del motor y estado de encendido.'
+    },
+    {
+      label: 'Resultados',
+      title: 'Tres niveles de riesgo',
+      text: 'El sistema clasifica el vehículo en riesgo bajo, medio o alto.'
+    },
+    {
+      label: 'Recomendación',
+      title: 'Acción sugerida',
+      text: 'Según el resultado, indica si conviene mantenimiento, revisión o taller.'
+    },
+    {
+      label: 'Objetivo',
+      title: 'Decisión rápida',
+      text: 'Ayuda a interpretar síntomas básicos antes de una revisión mecánica.'
+    }
+  ];
+
+  const examples = [
+    { value: 'Bajo', detail: 'Mantenimiento preventivo' },
+    { value: 'Medio', detail: 'Revisión general' },
+    { value: 'Alto', detail: 'Atención inmediata' }
+  ];
+
   return (
     <section className="home">
       <div className="home-content">
@@ -14,6 +43,16 @@ function Home({ onStart }) {
           <button type="button" className="home-button" onClick={onStart}>
             Ir al formulario
           </button>
+
+          <div className="home-context-grid" aria-label="Contexto del sistema">
+            {contextOptions.map((option) => (
+              <article className="home-context-card" key={option.title}>
+                <span>{option.label}</span>
+                <h3>{option.title}</h3>
+                <p>{option.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className="home-guide">
@@ -51,6 +90,16 @@ function Home({ onStart }) {
                 <p>Analiza los datos y revisa el diagnóstico recomendado.</p>
               </div>
             </div>
+          </div>
+
+          <div className="home-risk-summary">
+            <span className="summary-title">Resultados posibles</span>
+            {examples.map((example) => (
+              <div className="summary-row" key={example.value}>
+                <strong>{example.value}</strong>
+                <span>{example.detail}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

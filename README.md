@@ -60,9 +60,8 @@ Las metricas reportadas por el script son:
 
 - Exactitud general (`accuracy`).
 - Precision, recall y F1-score por clase.
-- Matriz de confusion.
 
-Modelo evaluado: Regresion Logistica. Como el dataset fue generado con reglas deterministicas, la efectividad esperada es alta en los datos de prueba. La validacion sirve para revisar que el modelo replique correctamente las tres categorias de riesgo: bajo, medio y alto.
+Modelo evaluado: Regresion Logistica. Como el dataset fue generado con reglas prestablecidas, la efectividad esperada es alta en los datos de prueba. La validacion sirve para revisar que el modelo replique correctamente las tres categorias de riesgo: bajo, medio y alto.
 
 ## Predicciones generadas
 
